@@ -1,0 +1,96 @@
+@model SbuNolda.Models.ContactMessage
+@{
+    ViewData["Title"] = "Contact";
+    ViewData["Page"] = "Contact";
+}
+
+<div class="hero-section" style="background:#1e2e36;">
+    <h1>Let's talk about your project</h1>
+    <p class="hero-sub">Reach out – we respond within 24 hours.</p>
+</div>
+
+<div class="section-wrap">
+
+    <!-- Contact cards -->
+    <div class="contact-methods">
+        <div class="contact-card">
+            <i class="fa-solid fa-phone"></i>
+            <h3>Call</h3>
+            <p>+27 81 548 3338<br />Mon–Fri 8am–6pm</p>
+        </div>
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Email</h3>
+            <p>ditsibanepalesa@@gmail.com</p>
+        </div>
+        <div class="contact-card">
+            <i class="fa-solid fa-location-dot"></i>
+            <h3>Visit</h3>
+            <p>312 Gauteng<br />South Africa</p>
+        </div>
+    </div>
+
+    <!-- Success message -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success">
+            <i class="fa-solid fa-circle-check"></i> @TempData["Success"]
+        </div>
+    }
+
+    <!-- Form + office info -->
+    <div class="grid-2" style="align-items:start;">
+
+        <div class="card form-card">
+            <h3><i class="fa-regular fa-paper-plane"></i> Send a message</h3>
+            <form asp-controller="Home" asp-action="Contact" method="post">
+                @Html.AntiForgeryToken()
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="validation-summary">
+                        <ul>
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label>Your name</label>
+                    <input asp-for="Name" class="form-input" placeholder="e.g. Thabo Nkosi" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input asp-for="Email" class="form-input" placeholder="you@example.com" />
+                </div>
+
+                <div class="form-group">
+                    <label>Your message</label>
+                    <textarea asp-for="Message" class="form-textarea" rows="5"
+                              placeholder="Tell us about your project..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    Send inquiry <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="card" style="background:#f4ece5;">
+            <h3><i class="fa-regular fa-building"></i> Office hours</h3>
+            <ul class="hours-list">
+                <li><strong>Monday – Friday</strong>: 8am – 6pm</li>
+                <li><strong>Saturday</strong>: 9am – 1pm</li>
+                <li><strong>Sunday</strong>: Closed</li>
+            </ul>
+            <p style="margin-top:1.5rem; color:#b45f2b;">
+                <i class="fa-solid fa-bolt"></i> Emergency line available 24/7
+            </p>
+        </div>
+
+    </div>
+</div>
